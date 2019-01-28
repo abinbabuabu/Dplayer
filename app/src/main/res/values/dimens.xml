@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="SongTextSize">24sp</dimen>
+    <dimen name="ArtistName">20sp</dimen>
+    <dimen name="ImageSide">60dp</dimen>
+</resources>
