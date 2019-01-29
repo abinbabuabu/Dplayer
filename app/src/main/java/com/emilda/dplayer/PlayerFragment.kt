@@ -1,12 +1,17 @@
 package com.emilda.dplayer
 
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context.NOTIFICATION_SERVICE
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.emilda.dplayer.Adapter.MediaAdapter
 import com.google.android.exoplayer2.ExoPlayer
@@ -44,17 +49,23 @@ class PlayerFragment : Fragment() {
         initializePlayer()
     }
 
+
     override fun onDestroy() {
         releasePlayer()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            releaseNotificationChannel()
+        }
         super.onDestroy()
     }
 
     private fun initializePlayer() {
         if (player == null) {
             player = ExoPlayerFactory.newSimpleInstance(context, DefaultTrackSelector())
+
             playerNotManager?.setPlayer(player)
             playerView?.player = player
-            Log.d("Working", "Player Loaded")
+
+
         }
         val mediaSource =
             buildMediaSource(Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"))
@@ -73,9 +84,29 @@ class PlayerFragment : Fragment() {
 
 
     private fun releasePlayer() {
-        if (player != null) {
+        if (player != null ) {
+            playerNotManager?.setPlayer(null)
             player?.release()
             player = null
         }
     }
+    private fun createNotificationChannel(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create the NotificationChannel
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
+            mChannel.description = descriptionText
+            val notificationManager = context?.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun releaseNotificationChannel(){
+        val notificationManager = context?.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.deleteNotificationChannel(CHANNEL_ID)
+    }
+
 }
