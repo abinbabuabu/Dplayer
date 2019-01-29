@@ -10,7 +10,7 @@ import com.emilda.dplayer.DataClass.SongType
 import com.emilda.dplayer.R
 import kotlinx.android.synthetic.main.song_row.view.*
 
-class SongsAdapter(val items: ArrayList<SongType>, var context:Context?) :
+class SongsAdapter(val items: ArrayList<SongType>, var context: Context?) :
     RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,7 +29,7 @@ class SongsAdapter(val items: ArrayList<SongType>, var context:Context?) :
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val songName:TextView = view.songname_tv
-        val artistName:TextView = view.artistname_tv
+        val songName: TextView = view.songname_tv
+        val artistName: TextView = view.artistname_tv
     }
 }

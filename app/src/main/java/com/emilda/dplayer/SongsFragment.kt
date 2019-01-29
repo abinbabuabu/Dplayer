@@ -17,7 +17,7 @@ class SongsFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.fragment_songs,container,false)
+        var view = inflater.inflate(R.layout.fragment_songs, container, false)
         var rv = view.findViewById(R.id.rv_song_list) as RecyclerView
         rv.layoutManager = LinearLayoutManager(context)
         songlist = sampleSongs()
