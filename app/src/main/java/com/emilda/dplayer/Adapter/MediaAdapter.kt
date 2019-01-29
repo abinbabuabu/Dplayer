@@ -8,7 +8,7 @@ import com.emilda.dplayer.MainActivity
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 
-class MediaAdapter(context: Context) : PlayerNotificationManager.MediaDescriptionAdapter {
+class MediaAdapter(context: Context?) : PlayerNotificationManager.MediaDescriptionAdapter {
     var context: Context? = null
 
     init {
@@ -22,14 +22,14 @@ class MediaAdapter(context: Context) : PlayerNotificationManager.MediaDescriptio
 
 
     override fun getCurrentContentText(player: Player?): String? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+       return "sample"
     }
 
     override fun getCurrentContentTitle(player: Player?): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+       return "sample"
     }
 
     override fun getCurrentLargeIcon(player: Player?, callback: PlayerNotificationManager.BitmapCallback?): Bitmap? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return null
     }
 }

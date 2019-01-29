@@ -1,0 +1,81 @@
+package com.emilda.dplayer
+
+
+import android.net.Uri
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.emilda.dplayer.Adapter.MediaAdapter
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.ui.PlayerNotificationManager
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
+import kotlinx.android.synthetic.main.fragment_player.*
+
+
+class PlayerFragment : Fragment() {
+    var CHANNEL_ID ="DPlayer"
+    var NOTIFICATION_ID = 12
+
+    var player: ExoPlayer? = null
+    var playerNotManager:PlayerNotificationManager?=null
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_player, container, false)
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        playerNotManager = PlayerNotificationManager(context,CHANNEL_ID,NOTIFICATION_ID,MediaAdapter(context))
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initializePlayer()
+    }
+
+    override fun onDestroy() {
+        releasePlayer()
+        super.onDestroy()
+    }
+
+    private fun initializePlayer() {
+        if (player == null) {
+            player = ExoPlayerFactory.newSimpleInstance(context, DefaultTrackSelector())
+            playerNotManager?.setPlayer(player)
+            playerView?.player = player
+            Log.d("Working", "Player Loaded")
+        }
+        val mediaSource =
+            buildMediaSource(Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"))
+        player?.prepare(mediaSource, true, false)
+        Log.d("Working", "Media Loaded")
+        player?.playWhenReady = true
+        Log.d("Working", "When Ready is set")
+    }
+
+    private fun buildMediaSource(uri: Uri): MediaSource {
+
+        val userAgent = "Dplayer"
+        return ExtractorMediaSource.Factory(DefaultHttpDataSourceFactory(userAgent))
+            .createMediaSource(uri)
+    }
+
+
+    private fun releasePlayer() {
+        if (player != null) {
+            player?.release()
+            player = null
+        }
+    }
+}
