@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "678978075175",
+    "firebase_url": "https://dplayer-7b002.firebaseio.com",
+    "project_id": "dplayer-7b002",
+    "storage_bucket": "dplayer-7b002.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678978075175:android:c171a0f570590b71",
+        "android_client_info": {
+          "package_name": "com.emilda.dplayer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "678978075175-d2s2emt39aiukpd2obqp07alai5b7078.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emilda.dplayer",
+            "certificate_hash": "c57eba52885e77abb953f32fb310ec8c45c28f0a"
+          }
+        },
+        {
+          "client_id": "678978075175-obv1km2mc69nbkioaq7nodh28fgncu20.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCk48QYt3jY-oD5Yu361MF7XNYSSdqkb7s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "678978075175-obv1km2mc69nbkioaq7nodh28fgncu20.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

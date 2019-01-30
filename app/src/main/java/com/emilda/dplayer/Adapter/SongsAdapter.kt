@@ -1,10 +1,12 @@
 package com.emilda.dplayer.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.emilda.dplayer.DataClass.SongType
 import com.emilda.dplayer.R
@@ -23,13 +25,18 @@ class SongsAdapter(val items: ArrayList<SongType>, var context: Context?) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.songName.text = items[position].songName
-
         holder.artistName.text = items[position].artistName
+        holder.itemView.setOnClickListener {
+            Log.d("FUCK",""+items[position])
+            it.findNavController().navigate(R.id.action_songsFragment_to_playerFragment)
+        }
 
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val songName: TextView = view.songname_tv
         val artistName: TextView = view.artistname_tv
+
+
     }
 }

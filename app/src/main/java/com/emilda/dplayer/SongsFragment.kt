@@ -27,7 +27,7 @@ class SongsFragment : Fragment() {
 
     fun sampleSongs(): ArrayList<SongType> {
         for (i in 1..20) {
-            var song = SongType("Song name" + i, "artistName" + i)
+            var song = SongType("Song name" + i, "artistName" + i,"Sample")
             songlist.add(song)
         }
         Log.d("Songs", "Is Song List Null" + songlist.isEmpty())

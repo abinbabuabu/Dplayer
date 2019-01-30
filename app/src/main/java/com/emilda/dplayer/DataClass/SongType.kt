@@ -1,4 +1,8 @@
 package com.emilda.dplayer.DataClass
 
-class SongType(var songName: String, var artistName: String) {
+data class SongType(var artistName: String,var songName: String ,var url:String)
+class Song(){
+    var artistName: String = ""
+    var songName: String = ""
+    var url:String = ""
 }

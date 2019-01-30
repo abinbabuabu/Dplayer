@@ -69,7 +69,7 @@ class PlayerFragment : Fragment() {
 
         }
         val mediaSource =
-            buildMediaSource(Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"))
+            buildMediaSource(Uri.parse("https://firebasestorage.googleapis.com/v0/b/dplayer-7b002.appspot.com/o/Song.mp3?alt=media&token=697845c0-e5f4-45be-9ab7-27f1df471bd1"))
         player?.prepare(mediaSource, true, false)
         Log.d("Working", "Media Loaded")
         player?.playWhenReady = true
