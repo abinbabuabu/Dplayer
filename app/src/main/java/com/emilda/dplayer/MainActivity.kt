@@ -4,20 +4,23 @@ package com.emilda.dplayer
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.emilda.dplayer.DataClass.Song
-import com.google.firebase.database.*
+import com.emilda.dplayer.DataClass.SongType
+import com.emilda.dplayer.UtilsApplication.Companion.dbRefAPP
+import com.emilda.dplayer.UtilsApplication.Companion.songRefAPP
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var firedb: FirebaseDatabase
+
     private lateinit var songRef: DatabaseReference
     private lateinit var childEventListener: ChildEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        firedb = FirebaseDatabase.getInstance()
-        songRef = firedb.reference.child("/")
+        songRef = dbRefAPP.child("/")
 
         childEventListener = object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -32,7 +35,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                val song = p0.getValue(Song::class.java)
+                var song = p0.getValue(SongType::class.java)
+                songRefAPP = song
+                song = songRefAPP
                 Log.d("FUCK", song?.url)
 
             }

@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emilda.dplayer.Adapter.SongsAdapter
 import com.emilda.dplayer.DataClass.SongType
+import com.emilda.dplayer.UtilsApplication.Companion.songRefAPP
 
 class SongsFragment : Fragment() {
-    var songlist: ArrayList<SongType> = ArrayList()
+    var songlist: ArrayList<SongType?> = ArrayList()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -25,11 +26,18 @@ class SongsFragment : Fragment() {
         return view
     }
 
-    fun sampleSongs(): ArrayList<SongType> {
-        for (i in 1..20) {
-            var song = SongType("Song name" + i, "artistName" + i,"Sample")
-            songlist.add(song)
-        }
+    fun sampleSongs(): ArrayList<SongType?> {
+        songlist.add(songRefAPP)
+        songlist.add(songRefAPP)
+        songlist.add(songRefAPP)
+        songlist.add(songRefAPP)
+        songlist.add(songRefAPP)
+        var song :SongType = SongType()
+        song.songName = "sample"
+        song.artistName="sample"
+        song.url="sample"
+        songlist.add(song)
+
         Log.d("Songs", "Is Song List Null" + songlist.isEmpty())
         return songlist
     }

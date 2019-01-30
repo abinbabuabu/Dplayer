@@ -12,7 +12,7 @@ import com.emilda.dplayer.DataClass.SongType
 import com.emilda.dplayer.R
 import kotlinx.android.synthetic.main.song_row.view.*
 
-class SongsAdapter(val items: ArrayList<SongType>, var context: Context?) :
+class SongsAdapter(val items: ArrayList<SongType?>, var context: Context?) :
     RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,8 +24,8 @@ class SongsAdapter(val items: ArrayList<SongType>, var context: Context?) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.songName.text = items[position].songName
-        holder.artistName.text = items[position].artistName
+        holder.songName.text = items[position]?.songName
+        holder.artistName.text = items[position]?.artistName
         holder.itemView.setOnClickListener {
             Log.d("FUCK",""+items[position])
             it.findNavController().navigate(R.id.action_songsFragment_to_playerFragment)
@@ -36,7 +36,5 @@ class SongsAdapter(val items: ArrayList<SongType>, var context: Context?) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val songName: TextView = view.songname_tv
         val artistName: TextView = view.artistname_tv
-
-
     }
 }
