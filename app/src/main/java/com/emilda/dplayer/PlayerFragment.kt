@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.emilda.dplayer.Adapter.MediaAdapter
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -29,6 +30,7 @@ class PlayerFragment : Fragment() {
 
     var player: ExoPlayer? = null
     var playerNotManager: PlayerNotificationManager? = null
+    var URl:String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,7 +71,7 @@ class PlayerFragment : Fragment() {
 
         }
         val mediaSource =
-            buildMediaSource(Uri.parse("https://firebasestorage.googleapis.com/v0/b/dplayer-7b002.appspot.com/o/Song.mp3?alt=media&token=697845c0-e5f4-45be-9ab7-27f1df471bd1"))
+            buildMediaSource(Uri.parse(URl))
         player?.prepare(mediaSource, true, false)
         Log.d("Working", "Media Loaded")
         player?.playWhenReady = true
@@ -98,4 +100,11 @@ class PlayerFragment : Fragment() {
         notificationManager.deleteNotificationChannel(CHANNEL_ID)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val model = activity?.run {
+            ViewModelProviders.of(this).get(sharedViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+        URl = model.currentSong!!.url
+    }
 }
