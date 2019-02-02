@@ -1,12 +1,14 @@
 package com.emilda.dplayer
 
 
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 
 class MainActivity : AppCompatActivity() {
-
+   lateinit var viewModel:sharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,12 +16,18 @@ class MainActivity : AppCompatActivity() {
 
 
         //View Model Created
-        val viewModel = ViewModelProviders.of(this,CustomViewModelFactory("somerandomvalue")).get(sharedViewModel::class.java)
+        viewModel = ViewModelProviders.of(this,CustomViewModelFactory("somerandomvalue")).get(sharedViewModel::class.java)
 //        viewModel?.getSongList()?.observe(this, Observer {
 //            Log.d("FUCK","THIS LIVE DATA")
 //        })?: Log.d("FUCK","THIS LIVE DATA")
 //        Log.d("FUCk",viewModel.getSongList().toString())
 
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.releasePlayer(this)
     }
 }

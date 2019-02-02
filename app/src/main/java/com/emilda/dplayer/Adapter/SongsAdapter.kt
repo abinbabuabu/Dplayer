@@ -1,7 +1,6 @@
 package com.emilda.dplayer.Adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +14,10 @@ import kotlinx.android.synthetic.main.song_row.view.*
 class SongsAdapter( var context: Context?) : RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
     var ItemsList :ArrayList<SongType?>? = null
     val mInflater : LayoutInflater
+
     init {
         mInflater = LayoutInflater.from(context)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,7 +34,7 @@ class SongsAdapter( var context: Context?) : RecyclerView.Adapter<SongsAdapter.V
         holder.songName.text = ItemsList?.get(position)?.songName
         holder.artistName.text = ItemsList?.get(position)?.artistName
         holder.itemView.setOnClickListener {
-            Log.d("FUCK",""+ (ItemsList?.get(position)))
+
             it.findNavController().navigate(R.id.action_songsFragment_to_playerFragment)
         }
     }
@@ -42,6 +43,7 @@ class SongsAdapter( var context: Context?) : RecyclerView.Adapter<SongsAdapter.V
         ItemsList = newList
         notifyDataSetChanged()
     }
+
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val songName: TextView = view.songname_tv

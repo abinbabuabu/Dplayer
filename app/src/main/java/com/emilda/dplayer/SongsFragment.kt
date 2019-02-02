@@ -13,12 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emilda.dplayer.Adapter.SongsAdapter
 import com.emilda.dplayer.DataClass.SongType
+import kotlinx.android.synthetic.main.fragment_songs.*
 
 
 class SongsFragment : Fragment() {
-    lateinit var  myAdapter : SongsAdapter
+    lateinit var myAdapter: SongsAdapter
     var songlist: ArrayList<SongType?> = ArrayList()
-    private var sharedViewModel:sharedViewModel?=null
+    var sharedViewModel: sharedViewModel? = null
     private lateinit var rv: RecyclerView
 
 
@@ -26,17 +27,16 @@ class SongsFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_songs, container, false)
         rv = view.findViewById(R.id.rv_song_list) as RecyclerView
 
-        //shared View MOdel Variable
+        //shared View Model Variable
 
-        sharedViewModel= activity?.run {
+        sharedViewModel = activity?.run {
             ViewModelProviders.of(this).get(com.emilda.dplayer.sharedViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-
         rv.layoutManager = LinearLayoutManager(context)
         myAdapter = SongsAdapter(context)
-        rv.adapter = myAdapter
 
+        rv.adapter = myAdapter
 
 
         return view
@@ -44,17 +44,23 @@ class SongsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        super.onCreate(savedInstanceState)
         val liveData = sharedViewModel?.getDataSnapshotLiveData()
         liveData?.observe(this, Observer { dataSnapshot ->
             if (dataSnapshot != null) {
                 //val ticker = dataSnapshot.child()
                 val price = dataSnapshot.child("songs").getValue(SongType::class.java)
-                Log.d("FUCK",price?.url.toString()+price?.artistName.toString())
+                Log.d("FUCK", price?.url.toString() + price?.artistName.toString())
                 songlist.add(price)
                 myAdapter.updateList(songlist)
             }
         })
+        sharedViewModel?.initializePlayer(context!!)
+        player_controls.showTimeoutMs=0
+        player_controls.visibility = View.VISIBLE
+        player_controls.player = sharedViewModel?.player
 
     }
 }
+
+
