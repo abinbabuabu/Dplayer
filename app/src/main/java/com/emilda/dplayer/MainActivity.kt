@@ -2,10 +2,12 @@ package com.emilda.dplayer
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 
 class MainActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -13,13 +15,14 @@ class MainActivity : AppCompatActivity() {
 
 
         //View Model Created
-        val sharedViewModel = ViewModelProviders.of(this).get(sharedViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this,CustomViewModelFactory("somerandomvalue")).get(sharedViewModel::class.java)
 //        sharedViewModel.number.observe(this, Observer {
 //            it?.let {
 //                Log.d("FUCK","View model Created")
 //            }
 //        })
-        sharedViewModel.lookForDbChange()
+        Log.d("FUCk",viewModel.getSongList().toString())
+
 
     }
 }

@@ -1,33 +1,37 @@
 package com.emilda.dplayer
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.emilda.dplayer.DataClass.SongType
 import com.google.firebase.database.*
 
 
-class sharedViewModel: ViewModel() {
-    var number = MutableLiveData<Int>()
+class sharedViewModel(UserId:String): ViewModel() {
+    var userid :String
     var currentSong: SongType? = null
-    lateinit var childEventListener: ChildEventListener
+
+
+
+    lateinit var valueEventListener: ChildEventListener
+
     var dbRef: DatabaseReference
     lateinit var songListRef: DatabaseReference
-     var songsList:MutableLiveData<List<SongType>> = MutableLiveData()
+
+     var songsList: MutableLiveData<ArrayList<SongType?>> = MutableLiveData()
 
     init {
-
         dbRef = FirebaseDatabase.getInstance().reference
+         this.userid = UserId
 
     }
 
 
-    fun lookForDbChange() {
+    fun getSongList(): MutableLiveData<ArrayList<SongType?>> {
         songListRef = dbRef.child("/")
 
-        childEventListener = object : ChildEventListener {
+        valueEventListener = object : ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                Log.d("FUCK", "Listener Error")
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {
@@ -35,22 +39,20 @@ class sharedViewModel: ViewModel() {
             }
 
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
             }
 
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                var song = p0.getValue(SongType::class.java)
-                currentSong = song
-                var list:ArrayList<SongType> = ArrayList()
-                list.add(song!!)
-                songsList.postValue(list)
-                Log.d("FUCK", song.url)
+            override fun onChildAdded(p0:DataSnapshot,p1:String?) {
             }
 
             override fun onChildRemoved(p0: DataSnapshot) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
+
         }
-        songListRef.addChildEventListener(childEventListener)
+        songListRef.addChildEventListener(valueEventListener)
+
+        return songsList
     }
 }
 
