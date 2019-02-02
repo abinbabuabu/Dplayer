@@ -2,6 +2,7 @@ package com.emilda.dplayer
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emilda.dplayer.Adapter.SongsAdapter
 import com.emilda.dplayer.DataClass.SongType
+
 
 class SongsFragment : Fragment() {
     lateinit var  myAdapter : SongsAdapter
@@ -32,32 +34,27 @@ class SongsFragment : Fragment() {
 
 
         rv.layoutManager = LinearLayoutManager(context)
-        myAdapter = SongsAdapter(sampleSongs("First"), context)
+        myAdapter = SongsAdapter(context)
         rv.adapter = myAdapter
 
 
-        songlist = sampleSongs("second")
-        myAdapter.notifyDataSetChanged()
 
         return view
     }
 
-    override fun onResume() {
-        super.onResume()
-        sharedViewModel?.getSongList()
-        sharedViewModel?.songsList?.observe(this, Observer { list ->
-            songlist = list
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val liveData = sharedViewModel?.getDataSnapshotLiveData()
+        liveData?.observe(this, Observer { dataSnapshot ->
+            if (dataSnapshot != null) {
+                //val ticker = dataSnapshot.child()
+                val price = dataSnapshot.child("songs").getValue(SongType::class.java)
+                Log.d("FUCK",price?.url.toString()+price?.artistName.toString())
+                songlist.add(price)
+                myAdapter.updateList(songlist)
+            }
         })
-        myAdapter.notifyDataSetChanged()
 
     }
-    fun sampleSongs(artistName:String): ArrayList<SongType?> {
-        var sample = SongType()
-        sample.artistName = artistName
-        sample.url = "sample"
-        sample.songName = "sample"
-        songlist.add(sample)
-        return songlist
-    }
-
 }

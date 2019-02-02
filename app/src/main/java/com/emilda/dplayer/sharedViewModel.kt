@@ -1,59 +1,36 @@
 package com.emilda.dplayer
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.emilda.dplayer.DataClass.SongType
-import com.google.firebase.database.*
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class sharedViewModel(UserId:String): ViewModel() {
     var userid :String
     var currentSong: SongType? = null
-
+    var songList : ArrayList<SongType?>?=null
 
 
     lateinit var valueEventListener: ChildEventListener
 
-    var dbRef: DatabaseReference
-    lateinit var songListRef: DatabaseReference
+     val songListRef: DatabaseReference
 
-     var songsList: MutableLiveData<ArrayList<SongType?>> = MutableLiveData()
 
     init {
-        dbRef = FirebaseDatabase.getInstance().reference
+         songListRef= FirebaseDatabase.getInstance().reference.child("/")
          this.userid = UserId
 
     }
+   private  val liveData = FirebaseQueryLiveData(songListRef)
 
-
-    fun getSongList(): MutableLiveData<ArrayList<SongType?>> {
-        songListRef = dbRef.child("/")
-
-        valueEventListener = object : ChildEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-
-            }
-
-            override fun onChildAdded(p0:DataSnapshot,p1:String?) {
-            }
-
-            override fun onChildRemoved(p0: DataSnapshot) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-        }
-        songListRef.addChildEventListener(valueEventListener)
-
-        return songsList
+    fun getDataSnapshotLiveData(): LiveData<DataSnapshot> {
+        return liveData
     }
+
 }
 
 
