@@ -27,7 +27,7 @@ class sharedViewModel(UserId:String): ViewModel() {
     var currentSong: SongType? = null
     val songListRef: DatabaseReference
     var isPlaying :Boolean = false
-    val sampleUrl ="https://firebasestorage.googleapis.com/v0/b/dplayer-7b002.appspot.com/o/Song.mp3?alt=media&token=697845c0-e5f4-45be-9ab7-27f1df471bd1"
+    var sampleUrl ="https://firebasestorage.googleapis.com/v0/b/dplayer-7b002.appspot.com/o/Song.mp3?alt=media&token=697845c0-e5f4-45be-9ab7-27f1df471bd1"
 
   //exoplayer
 
@@ -65,8 +65,10 @@ class sharedViewModel(UserId:String): ViewModel() {
             playerNotManager?.setPlayer(player)
             //playerView?.player = player
         }
+    }
+    fun loadMedia(songType: SongType?){
         val mediaSource =
-            buildMediaSource(Uri.parse(sampleUrl))
+            buildMediaSource(Uri.parse(songType?.url))
         player?.prepare(mediaSource, true, false)
         Log.d("Working", "Media Loaded")
         player?.playWhenReady = true

@@ -1,27 +1,29 @@
 package com.emilda.dplayer.Adapter
 
-import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.emilda.dplayer.DataClass.SongType
+import com.emilda.dplayer.Intefaces.songClickListener
 import com.emilda.dplayer.R
 import kotlinx.android.synthetic.main.song_row.view.*
 
-class SongsAdapter( var context: Context?) : RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
+class SongsAdapter(listener :songClickListener) : RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
     var ItemsList :ArrayList<SongType?>? = null
-    val mInflater : LayoutInflater
+    val mlistener:songClickListener
+
+
 
     init {
-        mInflater = LayoutInflater.from(context)
-
+        this.mlistener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(mInflater.inflate(R.layout.song_row, parent, false))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.song_row, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -31,13 +33,10 @@ class SongsAdapter( var context: Context?) : RecyclerView.Adapter<SongsAdapter.V
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.songName.text = ItemsList?.get(position)?.songName
-        holder.artistName.text = ItemsList?.get(position)?.artistName
-        holder.itemView.setOnClickListener {
-
-            it.findNavController().navigate(R.id.action_songsFragment_to_playerFragment)
-        }
+        holder.customBind(ItemsList?.get(position),position,mlistener)
     }
+
+
 
     internal fun updateList(newList:ArrayList<SongType?>?){
         ItemsList = newList
@@ -45,8 +44,27 @@ class SongsAdapter( var context: Context?) : RecyclerView.Adapter<SongsAdapter.V
     }
 
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        var view:View = view
         val songName: TextView = view.songname_tv
         val artistName: TextView = view.artistname_tv
+        val songLayout:LinearLayout = view.song_layout
+
+        fun customBind(Song:SongType?,position: Int , listener: songClickListener){
+            var rowSelected:Int = -1
+            songName.text = Song?.songName
+            artistName.text = Song?.artistName
+            view.setOnClickListener {
+                    listener.onSongClick(Song)
+                rowSelected =position
+                notifyDataSetChanged()
+            }
+            if(rowSelected == position){
+                songLayout.setBackgroundColor(Color.RED)
+            }
+
+        }
     }
+
 }
