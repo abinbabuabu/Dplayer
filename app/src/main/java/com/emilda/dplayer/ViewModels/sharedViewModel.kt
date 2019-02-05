@@ -1,4 +1,4 @@
-package com.emilda.dplayer
+package com.emilda.dplayer.ViewModels
 
 import android.app.NotificationManager
 import android.content.Context
@@ -6,10 +6,10 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.emilda.dplayer.Adapter.MediaAdapter
 import com.emilda.dplayer.DataClass.SongType
+import com.emilda.dplayer.R
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
@@ -17,15 +17,11 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 
 
 class sharedViewModel(UserId:String): ViewModel() {
     var userid :String
     var currentSong: SongType? = null
-    val songListRef: DatabaseReference
     var isPlaying :Boolean = false
     var sampleUrl ="https://firebasestorage.googleapis.com/v0/b/dplayer-7b002.appspot.com/o/Song.mp3?alt=media&token=697845c0-e5f4-45be-9ab7-27f1df471bd1"
 
@@ -38,17 +34,13 @@ class sharedViewModel(UserId:String): ViewModel() {
 
 
     init {
-         songListRef= FirebaseDatabase.getInstance().reference.child("/")
          this.userid = UserId
 
     }
-   private  val liveData = FirebaseQueryLiveData(songListRef)
+
 
 //Firebase
 
-    fun getDataSnapshotLiveData(): LiveData<DataSnapshot> {
-        return liveData
-    }
 
 //Exoplayer
 
@@ -63,7 +55,7 @@ class sharedViewModel(UserId:String): ViewModel() {
                 MediaAdapter(context)
             )
             playerNotManager?.setPlayer(player)
-            //playerView?.player = player
+
         }
     }
     fun loadMedia(songType: SongType?){

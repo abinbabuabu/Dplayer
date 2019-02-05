@@ -6,34 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.emilda.dplayer.DataClass.SongType
 import com.emilda.dplayer.Intefaces.songClickListener
 import com.emilda.dplayer.R
 import kotlinx.android.synthetic.main.song_row.view.*
 
-class SongsAdapter(listener :songClickListener) : RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
+class SongsAdapter(listener :songClickListener) : ListAdapter<SongType,SongsAdapter.ViewHolder>(SongType.diffCallback) {
     var ItemsList :ArrayList<SongType?>? = null
-    val mlistener:songClickListener
+    val mlistener:songClickListener = listener
 
-
-
-    init {
-        this.mlistener = listener
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.song_row, parent, false))
     }
 
-    override fun getItemCount(): Int {
-        return if(ItemsList!=null) ItemsList!!.size
-        else -1
-
-    }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.customBind(ItemsList?.get(position),position,mlistener)
+        holder.customBind(getItem(position),position,mlistener)
     }
 
 
