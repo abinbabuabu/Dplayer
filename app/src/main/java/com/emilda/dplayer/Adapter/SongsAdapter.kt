@@ -4,8 +4,9 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.emilda.dplayer.DataClass.SongType
@@ -39,7 +40,7 @@ class SongsAdapter(listener :songClickListener) : ListAdapter<SongType,SongsAdap
         var view:View = view
         val songName: TextView = view.songname_tv
         val artistName: TextView = view.artistname_tv
-        val songLayout:LinearLayout = view.song_layout
+        val songLayout:ConstraintLayout = view.song_layout
 
         fun customBind(Song:SongType?,position: Int , listener: songClickListener){
             var rowSelected:Int = -1
@@ -48,7 +49,8 @@ class SongsAdapter(listener :songClickListener) : ListAdapter<SongType,SongsAdap
             view.setOnClickListener {
                     listener.onSongClick(Song)
                 rowSelected =position
-                notifyDataSetChanged()
+                it.findNavController().navigate(R.id.action_songsFragment_to_playerFragment)
+                //notifyDataSetChanged()
             }
             if(rowSelected == position){
                 songLayout.setBackgroundColor(Color.RED)
@@ -56,5 +58,6 @@ class SongsAdapter(listener :songClickListener) : ListAdapter<SongType,SongsAdap
 
         }
     }
+
 
 }

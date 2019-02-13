@@ -14,12 +14,16 @@ class AllSongsViewModel :ViewModel(){
      private val liveData:LiveData<DataSnapshot> = FirebaseQueryLiveData(AllSongsRef)
 
   fun getAllSongsList():LiveData<List<SongType?>> {
-      val AllSonglivedata =Transformations.map(liveData){
+      return Transformations.map(liveData){
                it.children.map { child ->
                    child.getValue(SongType::class.java)
                }
           }
-      return AllSonglivedata
   }
+
+    fun sample(){
+        FirebaseRecyclerOptions<>
+    }
+
 
 }

@@ -67,13 +67,6 @@ class SongsFragment : Fragment() {
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        player_controls.showTimeoutMs=0
-        player_controls.visibility = View.VISIBLE
-        player_controls.player = sharedVM.player!!
-    }
-
 }
 
 
