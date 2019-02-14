@@ -20,10 +20,4 @@ class AllSongsViewModel :ViewModel(){
                }
           }
   }
-
-    fun sample(){
-        FirebaseRecyclerOptions<>
-    }
-
-
 }
