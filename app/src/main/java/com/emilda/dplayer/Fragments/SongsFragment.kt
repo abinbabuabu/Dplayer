@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,16 +29,7 @@ class SongsFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView) as RecyclerView
 
         recyclerView.layoutManager = LinearLayoutManager(context)
-        myAdapter = SongsAdapter(object:songClickListener{
-            override fun onSongClick(song: SongType?){
 
-                sharedVM.loadMedia(song)
-
-            }
-
-        })
-
-        recyclerView.adapter = myAdapter
 
         //setting Player Contols
 
@@ -61,11 +51,25 @@ class SongsFragment : Fragment() {
         //TODO("Make the View model to pass a User Id")
         fragmentVM = ViewModelProviders.of(this).get(AllSongsViewModel::class.java)
 
-        fragmentVM.getAllSongsList().observe(this , Observer { list ->
-                myAdapter.submitList(list)
+        myAdapter = SongsAdapter(fragmentVM.options,context!!,object :songClickListener{
+            override fun onSongClick(song: SongType?) {
+                sharedVM.loadMedia(song)
+            }
         })
-        player_controls.player = sharedVM.player!!
+        recyclerView.adapter = myAdapter
 
+        player_controls.player = sharedVM.player
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        myAdapter.startListening()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        myAdapter.stopListening()
     }
 
 }
