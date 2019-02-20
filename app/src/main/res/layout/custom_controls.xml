@@ -4,8 +4,8 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent">
     <com.google.android.exoplayer2.ui.DefaultTimeBar android:layout_width="match_parent"
-                                                     android:backgroundTint="@color/colorPrimaryDark"
-                                                     android:background="@color/colorPrimaryDark"
+                                                     app:scrubber_color="@color/colorPrimary"
+                                                     app:played_color="@color/colorAccent"
                                                      android:visibility="visible"
                                                      android:id="@+id/exo_progress"
                                                      android:layout_height="wrap_content"

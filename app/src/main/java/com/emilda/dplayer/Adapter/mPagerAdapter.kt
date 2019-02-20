@@ -1,0 +1,31 @@
+package com.emilda.dplayer.Adapter
+
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import com.emilda.dplayer.Fragments.ArtistFragment
+import com.emilda.dplayer.Fragments.PlayerFragment
+import com.emilda.dplayer.Fragments.SongsFragment
+
+class mPagerAdapter(fm:FragmentManager) : FragmentPagerAdapter(fm) {
+
+    override fun getItem(position: Int): Fragment {
+       return when(position){
+            0 -> ArtistFragment()
+            1 -> PlayerFragment()
+           else -> SongsFragment()
+       }
+    }
+
+    override fun getCount(): Int {
+        return 3
+    }
+
+    override fun getPageTitle(position: Int): CharSequence? {
+        return when(position){
+            0 ->"Artists"
+            1->"Player"
+            else -> "Songs"
+        }
+    }
+}

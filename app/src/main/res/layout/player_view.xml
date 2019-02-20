@@ -22,7 +22,9 @@
     </androidx.cardview.widget.CardView>
 
     <com.google.android.exoplayer2.ui.PlayerControlView android:layout_width="0dp"
-                                                        android:id="@+id/player_control"
+                                                        android:visibility="visible"
+                                                        app:show_timeout="0"
+                                                        android:id="@+id/player_exo"
                                                         android:layout_height="316dp"
                                                         app:controller_layout_id="@layout/custom_controls"
                                                         app:layout_constraintStart_toStartOf="parent"

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.emilda.dplayer.DataClass.SongType
 import com.emilda.dplayer.Intefaces.songClickListener
@@ -37,7 +36,7 @@ class RvAdapter(options: FirebaseRecyclerOptions<SongType>, context: Context,lis
 
          view.setOnClickListener {
              listener.onSongClick(current)
-             it.findNavController().navigate(R.id.action_artistFragment_to_songsFragment)
+
          }
         }
 

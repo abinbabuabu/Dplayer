@@ -1,8 +1,7 @@
-package com.emilda.dplayer
+package com.emilda.dplayer.Fragments
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emilda.dplayer.Adapter.SongsAdapter
 import com.emilda.dplayer.DataClass.SongType
 import com.emilda.dplayer.Intefaces.songClickListener
+import com.emilda.dplayer.R
 import com.emilda.dplayer.ViewModels.AllSongsViewModel
 import com.emilda.dplayer.ViewModels.sharedViewModel
 import kotlinx.android.synthetic.main.fragment_songs.*
@@ -32,8 +32,9 @@ class SongsFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         myAdapter = SongsAdapter(object:songClickListener{
             override fun onSongClick(song: SongType?){
-               Log.d("FUCK","Item CLicked")
+
                 sharedVM.loadMedia(song)
+
             }
 
         })

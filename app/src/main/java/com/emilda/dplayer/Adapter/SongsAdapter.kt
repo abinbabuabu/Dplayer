@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.emilda.dplayer.DataClass.SongType
@@ -49,7 +48,7 @@ class SongsAdapter(listener :songClickListener) : ListAdapter<SongType,SongsAdap
             view.setOnClickListener {
                     listener.onSongClick(Song)
                 rowSelected =position
-                it.findNavController().navigate(R.id.action_songsFragment_to_playerFragment)
+
                 //notifyDataSetChanged()
             }
             if(rowSelected == position){
