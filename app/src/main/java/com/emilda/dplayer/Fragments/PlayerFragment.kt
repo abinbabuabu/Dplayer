@@ -41,15 +41,12 @@ class PlayerFragment : Fragment() {
             ViewModelProviders.of(this).get(sharedViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-
-
-    }
-
-    override fun onStart() {
-        super.onStart()
         player.player = model.player
 
+
+
     }
+
 }
 
 

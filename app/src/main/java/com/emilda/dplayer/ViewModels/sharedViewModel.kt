@@ -1,11 +1,8 @@
 package com.emilda.dplayer.ViewModels
 
-import android.app.NotificationManager
 import android.content.Context
 import android.net.Uri
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import com.emilda.dplayer.Adapter.MediaAdapter
 import com.emilda.dplayer.DataClass.SongType
@@ -30,7 +27,7 @@ class sharedViewModel(UserId:String): ViewModel() {
     var CHANNEL_ID = "DPlayer"
     var NOTIFICATION_ID = 12
     var player: ExoPlayer? = null
-    var playerNotManager: PlayerNotificationManager? = null
+    lateinit var playerNotManager: PlayerNotificationManager
 
 
     init {
@@ -52,9 +49,13 @@ class sharedViewModel(UserId:String): ViewModel() {
                 CHANNEL_ID,
                 R.string.CHANNEL_NAME,
                 NOTIFICATION_ID,
-                MediaAdapter(context)
+                MediaAdapter(context,currentSong)
             )
-            playerNotManager?.setPlayer(player)
+         playerNotManager.setFastForwardIncrementMs(0)
+            playerNotManager.setRewindIncrementMs(0)
+            playerNotManager.setStopAction(null)
+
+            playerNotManager.setPlayer(player)
 
         }
     }
@@ -72,15 +73,14 @@ class sharedViewModel(UserId:String): ViewModel() {
             .createMediaSource(uri)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
      fun releasePlayer(context:Context) {
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.deleteNotificationChannel(CHANNEL_ID)
-        if (player != null) {
-            playerNotManager?.setPlayer(null)
+        //val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+       // notificationManager.deleteNotificationChannel(CHANNEL_ID)
+        playerNotManager.setPlayer(null)
+
+         playerNotManager.setPlayer(null)
             player?.release()
             player = null
-        }
     }
 }
 

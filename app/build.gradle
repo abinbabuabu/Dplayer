@@ -56,6 +56,9 @@ dependencies {
     //firebase sdks
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-database:16.0.6'
+    implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+
 
     //Shimmer
     //implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
@@ -66,6 +69,9 @@ dependencies {
     //Firebase Paging
     implementation 'com.firebaseui:firebase-ui-database:4.3.1'
     implementation 'androidx.cardview:cardview:1.0.0'
+
+    //material SearchView
+     implementation'com.miguelcatalan:materialsearchview:1.4.0'
 
 }
 apply plugin: 'com.google.gms.google-services'
