@@ -20,7 +20,6 @@ class sharedViewModel(UserId:String): ViewModel() {
     var userid :String
     var currentSong: SongType? = null
     var isPlaying :Boolean = false
-    var sampleUrl ="https://firebasestorage.googleapis.com/v0/b/dplayer-7b002.appspot.com/o/Song.mp3?alt=media&token=697845c0-e5f4-45be-9ab7-27f1df471bd1"
 
   //exoplayer
 
@@ -56,6 +55,7 @@ class sharedViewModel(UserId:String): ViewModel() {
             playerNotManager.setStopAction(null)
 
             playerNotManager.setPlayer(player)
+            Log.d("user",userid)
 
         }
     }

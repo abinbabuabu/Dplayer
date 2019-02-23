@@ -9,4 +9,8 @@
     </style>
     
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
+    
+    <style name="signIntheme" parent="FirebaseUI">
+        <item name="android:windowBackground">@drawable/music_bg</item>
+    </style>
 </resources>
