@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.emilda.dplayer.Adapter.MediaAdapter
 import com.emilda.dplayer.DataClass.SongType
 import com.emilda.dplayer.R
+import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.firebase.ui.database.SnapshotParser
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
@@ -14,12 +16,17 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
 
 
-class sharedViewModel(UserId:String): ViewModel() {
+class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
     var userid :String
     var currentSong: SongType? = null
     var isPlaying :Boolean = false
+    var newUser:Boolean
+   // private val AllArtistRef: Query = FirebaseDatabase.getInstance().reference.child("/songs")
 
   //exoplayer
 
@@ -31,6 +38,7 @@ class sharedViewModel(UserId:String): ViewModel() {
 
     init {
          this.userid = UserId
+         this.newUser = newUser
 
     }
 
@@ -82,6 +90,27 @@ class sharedViewModel(UserId:String): ViewModel() {
             player?.release()
             player = null
     }
+
+    fun searchFiredb(queryString: String):FirebaseRecyclerOptions<SongType>{
+        Log.d("fuck1","2called")
+        //AllArtistRef.orderByValue().startAt("son")//.endAt("$queryString\\uf8ff")
+        val options = FirebaseRecyclerOptions.Builder<SongType>().setQuery(AllArtistRef,object:
+            SnapshotParser<SongType> {
+            override fun parseSnapshot(snapshot: DataSnapshot): SongType {
+                return snapshot.getValue(SongType::class.java)!!
+            }
+        }).build()
+        return options
+    }
+
+    private val AllArtistRef: Query = FirebaseDatabase.getInstance().reference.child("/songs")
+    //private val liveData: LiveData<DataSnapshot> = FirebaseQueryLiveData(AllArtistRef)
+
+    val options = FirebaseRecyclerOptions.Builder<SongType>().setQuery(AllArtistRef,object: SnapshotParser<SongType> {
+        override fun parseSnapshot(snapshot: DataSnapshot): SongType {
+            return snapshot.getValue(SongType::class.java)!!
+        }
+    }).build()
 }
 
 

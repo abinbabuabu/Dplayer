@@ -4,12 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 
-class splash : AppCompatActivity() {
+class splash : BaseActivity() {
     lateinit var firebaseAuth: FirebaseAuth
     lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
     private val RC_SIGN_IN = 123
@@ -23,8 +22,11 @@ class splash : AppCompatActivity() {
         mAuthStateListener = FirebaseAuth.AuthStateListener {
             var user = it.currentUser
             if (user != null) {
+                var newuser:Boolean = user.metadata?.creationTimestamp == user.metadata?.lastSignInTimestamp
+
                 var intent = Intent(this, MainActivity::class.java).apply {
                     putExtra("USER_ID", user.uid)
+                    putExtra("NEW_USER",newuser)
                 }
                 startActivity(intent)
                 finish()
@@ -72,4 +74,9 @@ class splash : AppCompatActivity() {
         super.onResume()
         firebaseAuth.addAuthStateListener(mAuthStateListener)
     }
+
+    fun sample() {
+        firebaseAuth.currentUser?.metadata
+    }
+
 }
