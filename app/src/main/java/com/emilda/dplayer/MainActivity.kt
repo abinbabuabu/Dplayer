@@ -4,6 +4,7 @@ package com.emilda.dplayer
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -18,6 +19,7 @@ import com.emilda.dplayer.Reciever.ConnectivityReceiverLive
 import com.emilda.dplayer.ViewModels.sharedViewModel
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.mini_player_layout.*
 
 class MainActivity : BaseActivity() {
 
@@ -43,25 +45,18 @@ class MainActivity : BaseActivity() {
         mtoolbar = toolbar
         setSupportActionBar(mtoolbar)
         searchView = search_view as MaterialSearchView
-        recyclerView = findViewById(R.id.search_result)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        //recyclerSetup("sample")
 
-        var options = viewModel.options
-        adapter = SongsAdapter(options,this,object:songClickListener{
-            override fun onSongClick(song: SongType?) {
-                // Toast.makeText(,"Clicked",Toast.LENGTH_LONG).show()
-            }
-        })
-        recyclerView.adapter = adapter
+        recyclerView = findViewById(R.id.search_results)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerSetup("sample")
 
 
         val fragmentAdapter = mPagerAdapter(supportFragmentManager)
-//        view_pager.adapter = fragmentAdapter
-//        main_tab_layout.setupWithViewPager(view_pager)
+        view_pager.adapter = fragmentAdapter
+        main_tab_layout.setupWithViewPager(view_pager)
         internet()
         createSearch()
-
+        mini_player.player = viewModel.player
 
     }
 
@@ -82,14 +77,15 @@ class MainActivity : BaseActivity() {
     fun createSearch() {
         searchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                //recyclerSetup(query!!)
-                Log.d("FUCK",query)
+                recyclerSetup(query!!)
+                adapter.startListening()
+                Log.d("FUCK", query)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-               // recyclerSetup(newText!!)
-                Log.d("FUCK",newText)
+                recyclerSetup(newText!!)
+                Log.d("FUCK", newText)
                 return true
             }
 
@@ -97,15 +93,15 @@ class MainActivity : BaseActivity() {
 
         searchView.setOnSearchViewListener(object : MaterialSearchView.SearchViewListener {
             override fun onSearchViewClosed() {
-//                search_result.visibility = View.GONE
-//                main_tab_layout.visibility = View.VISIBLE
-//                view_pager.visibility = View.VISIBLE
+                search_results.visibility = View.GONE
+                main_tab_layout.visibility = View.VISIBLE
+                view_pager.visibility = View.VISIBLE
             }
 
             override fun onSearchViewShown() {
-//                main_tab_layout.visibility = View.GONE
-//                view_pager.visibility = View.GONE
-//                search_result.visibility = View.VISIBLE
+                main_tab_layout.visibility = View.GONE
+                view_pager.visibility = View.GONE
+                search_results.visibility = View.VISIBLE
             }
 
         })
@@ -122,16 +118,20 @@ class MainActivity : BaseActivity() {
         })
     }
 
-   /* private fun recyclerSetup(query:String){
-        Log.d("fuck1","1called")
-        var options =viewModel.options
-        adapter =SongsAdapter(options,this,object:songClickListener{
-            override fun onSongClick(song: SongType?) {
-               // Toast.makeText(,"Clicked",Toast.LENGTH_LONG).show()
+    private fun recyclerSetup(query: String) {
+        var options = viewModel.searchFiredb(query)
+        adapter = SongsAdapter(options, this, object : songClickListener {
+            override fun onSongClick(song: SongType, int: Int) {
+                // Toast.makeText(,"Clicked",Toast.LENGTH_LONG).show()
             }
         })
 
         recyclerView.adapter = adapter
-    }*/
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.stopListening()
+    }
 
 }

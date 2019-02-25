@@ -12,6 +12,7 @@ class splash : BaseActivity() {
     lateinit var firebaseAuth: FirebaseAuth
     lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
     private val RC_SIGN_IN = 123
+    private var userID ="null"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

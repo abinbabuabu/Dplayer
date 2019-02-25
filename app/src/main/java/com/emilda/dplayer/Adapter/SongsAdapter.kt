@@ -26,7 +26,7 @@ class SongsAdapter(options: FirebaseRecyclerOptions<SongType>, context: Context,
 
     override fun onBindViewHolder(holder: mViewHolder, position: Int, current: SongType) {
         holder.customBind(mlistener, current)
-
+ Log.d("Recycler view","Binding is done")
     }
 
     inner class mViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -37,7 +37,7 @@ class SongsAdapter(options: FirebaseRecyclerOptions<SongType>, context: Context,
         fun customBind(listener: songClickListener, current: SongType) {
 
             view.setOnClickListener {
-                listener.onSongClick(current)
+                listener.onSongClick(current,it.id)
             }
 
             optionslayout.setOnClickListener{

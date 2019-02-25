@@ -51,8 +51,8 @@ class SongsFragment : Fragment() {
         //TODO("Make the View model to pass a User Id")
         fragmentVM = ViewModelProviders.of(this).get(AllSongsViewModel::class.java)
 
-        myAdapter = SongsAdapter(fragmentVM.options,context!!,object :songClickListener{
-            override fun onSongClick(song: SongType?) {
+        myAdapter = SongsAdapter(fragmentVM.options,context!!,object:songClickListener{
+            override fun onSongClick(song: SongType, int: Int) {
                 sharedVM.loadMedia(song)
             }
         })

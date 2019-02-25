@@ -26,7 +26,8 @@ class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
     var currentSong: SongType? = null
     var isPlaying :Boolean = false
     var newUser:Boolean
-   // private val AllArtistRef: Query = FirebaseDatabase.getInstance().reference.child("/songs")
+    private val AllArtistRef: Query = FirebaseDatabase.getInstance().reference.child("/songs")
+    private val users = FirebaseDatabase.getInstance().reference.child("/users")
 
   //exoplayer
 
@@ -58,6 +59,7 @@ class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
                 NOTIFICATION_ID,
                 MediaAdapter(context,currentSong)
             )
+
          playerNotManager.setFastForwardIncrementMs(0)
             playerNotManager.setRewindIncrementMs(0)
             playerNotManager.setStopAction(null)
@@ -82,8 +84,6 @@ class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
     }
 
      fun releasePlayer(context:Context) {
-        //val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-       // notificationManager.deleteNotificationChannel(CHANNEL_ID)
         playerNotManager.setPlayer(null)
 
          playerNotManager.setPlayer(null)
@@ -92,9 +92,8 @@ class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
     }
 
     fun searchFiredb(queryString: String):FirebaseRecyclerOptions<SongType>{
-        Log.d("fuck1","2called")
-        //AllArtistRef.orderByValue().startAt("son")//.endAt("$queryString\\uf8ff")
-        val options = FirebaseRecyclerOptions.Builder<SongType>().setQuery(AllArtistRef,object:
+        val optBuild =AllArtistRef.orderByValue().startAt(queryString)//.endAt("$queryString\\uf8ff")
+        val options = FirebaseRecyclerOptions.Builder<SongType>().setQuery(optBuild,object:
             SnapshotParser<SongType> {
             override fun parseSnapshot(snapshot: DataSnapshot): SongType {
                 return snapshot.getValue(SongType::class.java)!!
@@ -103,14 +102,11 @@ class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
         return options
     }
 
-    private val AllArtistRef: Query = FirebaseDatabase.getInstance().reference.child("/songs")
-    //private val liveData: LiveData<DataSnapshot> = FirebaseQueryLiveData(AllArtistRef)
 
-    val options = FirebaseRecyclerOptions.Builder<SongType>().setQuery(AllArtistRef,object: SnapshotParser<SongType> {
-        override fun parseSnapshot(snapshot: DataSnapshot): SongType {
-            return snapshot.getValue(SongType::class.java)!!
-        }
-    }).build()
+    fun addToFavorites(songType: SongType){
+        users.child(userid).child(songType.artistName).setValue(songType)
+    }
+
 }
 
 

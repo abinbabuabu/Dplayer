@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge>
+<ImageButton xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:id="@+id/exo_play"
+             android:background="#00000000"
+             app:srcCompat="@drawable/ic_play_arrow_black_24dp" android:layout_height="56dp"
+             android:scaleType="fitCenter"/>
+<ImageButton xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:id="@+id/exo_pause"
+             android:background="#00000000"
+             app:srcCompat="@drawable/ic_pause_black_24dp" android:layout_height="56dp"
+             android:scaleType="fitCenter"/>
+</merge>
