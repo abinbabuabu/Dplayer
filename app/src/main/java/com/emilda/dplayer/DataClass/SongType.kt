@@ -15,7 +15,10 @@ class SongType(
     var songName: String = "",
     @set:PropertyName("url")
     @get:PropertyName("url")
-    var url: String = ""
+    var url: String = "",
+    @set:PropertyName("isFav")
+    @get:PropertyName("isFav")
+    var isFav: Boolean = false
     )
 {
     constructor() : this("", "", "")

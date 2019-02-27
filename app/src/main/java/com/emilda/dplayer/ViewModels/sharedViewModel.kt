@@ -3,6 +3,8 @@ package com.emilda.dplayer.ViewModels
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.emilda.dplayer.Adapter.MediaAdapter
 import com.emilda.dplayer.DataClass.SongType
@@ -16,9 +18,7 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.Query
+import com.google.firebase.database.*
 
 
 class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
@@ -104,8 +104,37 @@ class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
 
 
     fun addToFavorites(songType: SongType){
+        songType.isFav = true
         users.child(userid).child(songType.artistName).setValue(songType)
     }
+
+    fun removeFavSong(song: SongType) {
+        users.child(userid).child(song.artistName).removeValue()
+    }
+
+    fun checkFav(song: SongType): LiveData<Boolean> {
+         val FavRef= FirebaseDatabase.getInstance().reference.child("/users/$userid")
+        val data: MutableLiveData<Boolean> = MutableLiveData()
+        data.postValue(false)
+
+        FavRef.child(song.artistName).addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    data.postValue(true)
+                }
+                else{
+                    Log.d("FUCK","Not A fav")
+                }
+            }
+        })
+        return data
+    }
+
+
 
 }
 

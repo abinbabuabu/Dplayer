@@ -1,52 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                                                   xmlns:android="http://schemas.android.com/apk/res/android">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:layout_width="match_parent">
-    <FrameLayout
-            android:id="@+id/toolbar_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <include layout="@layout/activity_main_contents"></include>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:background="@color/colorAccent"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:theme="@style/AppTheme.AppBarOverlay"/>
-
-        <com.miguelcatalan.materialsearchview.MaterialSearchView
-                android:id="@+id/search_view"
-                android:visibility="visible"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-    </FrameLayout>
-
-
-    <com.google.android.material.tabs.TabLayout android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:id="@+id/main_tab_layout"
-    >
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager.widget.ViewPager android:layout_width="match_parent"
-                                         android:layout_height="match_parent"
-                                         android:layout_weight="0.2"
-                                         android:id="@+id/view_pager"></androidx.viewpager.widget.ViewPager>
-
-    <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
-                                               android:visibility="gone"
-                                               android:layout_height="match_parent"
-                                               android:id="@+id/search_results">
-
-    </androidx.recyclerview.widget.RecyclerView>
-    <include
-            android:layout_height="72dp"
-            layout="@layout/mini_player_layout" android:layout_width="match_parent">
-
-    </include>
-
-</LinearLayout>
 

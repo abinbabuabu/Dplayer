@@ -8,8 +8,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
 
-class AllSongsViewModel :ViewModel(){
-    private val AllArtistRef: Query = FirebaseDatabase.getInstance().reference.child("/songs")
+class AllSongsViewModel(userId: String) :ViewModel(){
+    val userId = userId
+
+    private val AllArtistRef: Query = FirebaseDatabase.getInstance().reference.child("/users/$userId")
     //private val liveData: LiveData<DataSnapshot> = FirebaseQueryLiveData(AllArtistRef)
 
     val options = FirebaseRecyclerOptions.Builder<SongType>().setQuery(AllArtistRef,object: SnapshotParser<SongType> {
@@ -17,4 +19,7 @@ class AllSongsViewModel :ViewModel(){
             return snapshot.getValue(SongType::class.java)!!
         }
     }).build()
+
+
+
 }

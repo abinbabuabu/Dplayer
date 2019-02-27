@@ -45,10 +45,7 @@ class SongsAdapter(options: FirebaseRecyclerOptions<SongType>, context: Context,
                 val popupMenu = PopupMenu(context,optionsButton)
                 popupMenu.inflate(R.menu.details_fav_song)
                 popupMenu.setOnMenuItemClickListener { item ->
-                    when(item.itemId){
-                        R.id.add_to_now_playing -> Toast.makeText(context,"Added to now Playing",Toast.LENGTH_LONG).show()
-                        R.id.remove_song-> Toast.makeText(context,"Song Removed",Toast.LENGTH_LONG).show()
-                    }
+                    listener.onSongClick(current,item.itemId)
                     true
                 }
                 popupMenu.show()

@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emilda.dplayer.Adapter.SongsAdapter
 import com.emilda.dplayer.DataClass.SongType
+import com.emilda.dplayer.Factory.AllsongsFactory
 import com.emilda.dplayer.Intefaces.songClickListener
 import com.emilda.dplayer.R
 import com.emilda.dplayer.ViewModels.AllSongsViewModel
@@ -31,8 +33,7 @@ class SongsFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
 
-        //setting Player Contols
-
+        //setting Player Controls
         return view
     }
 
@@ -43,17 +44,23 @@ class SongsFragment : Fragment() {
         sharedVM = activity?.run {
             ViewModelProviders.of(this).get(sharedViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
+
         sharedVM.initializePlayer(context!!)
 
 
 
         //Create Fragment View Model
-        //TODO("Make the View model to pass a User Id")
-        fragmentVM = ViewModelProviders.of(this).get(AllSongsViewModel::class.java)
+        fragmentVM = ViewModelProviders.of(this,AllsongsFactory(sharedVM.userid)).get(AllSongsViewModel::class.java)
 
         myAdapter = SongsAdapter(fragmentVM.options,context!!,object:songClickListener{
             override fun onSongClick(song: SongType, int: Int) {
+                if(int == R.id.song_layout)
                 sharedVM.loadMedia(song)
+                else if (int == R.id.add_to_now_playing)
+                    Toast.makeText(context,"Added to now playing",Toast.LENGTH_LONG).show()
+                else
+                    sharedVM.removeFavSong(song)
+
             }
         })
         recyclerView.adapter = myAdapter

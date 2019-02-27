@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emilda.dplayer.Adapter.FavAdapter
 import com.emilda.dplayer.DataClass.SongType
+import com.emilda.dplayer.Factory.FavFactory
 import com.emilda.dplayer.Intefaces.songClickListener
 import com.emilda.dplayer.R
 import com.emilda.dplayer.ViewModels.FavoritesViewModel
@@ -32,11 +33,14 @@ class FavFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         fav_recycler.layoutManager = LinearLayoutManager(context)
         //viewModels
-        fragmentVM = ViewModelProviders.of(this).get(FavoritesViewModel::class.java)
+
         sharedVM = activity?.run {
             ViewModelProviders.of(this).get(sharedViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
         sharedVM.initializePlayer(context!!)
+
+
+        fragmentVM = ViewModelProviders.of(this,FavFactory(sharedVM.userid)).get(FavoritesViewModel::class.java)
 
 
 
@@ -45,11 +49,13 @@ class FavFragment : Fragment() {
             override fun onSongClick(song: SongType, int: Int) {
                if (int == R.id.song_layout)
                    sharedVM.loadMedia(song)
-                else
-                  sharedVM.addToFavorites(song)
+                else {
+                   sharedVM.addToFavorites(song)
+
+               }
 
             }
-        })
+        }, sharedVM)
 
         fav_recycler.adapter = adapter
     }
@@ -60,8 +66,8 @@ class FavFragment : Fragment() {
 
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         adapter.stopListening()
     }
 

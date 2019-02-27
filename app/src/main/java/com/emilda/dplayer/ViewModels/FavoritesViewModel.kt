@@ -8,12 +8,16 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
 
-class FavoritesViewModel : ViewModel() {
+class FavoritesViewModel(userId: String) : ViewModel() {
     private val AllArtistRef: Query = FirebaseDatabase.getInstance().reference.child("/songs")
+
 
     val options = FirebaseRecyclerOptions.Builder<SongType>().setQuery(AllArtistRef, object : SnapshotParser<SongType> {
         override fun parseSnapshot(snapshot: DataSnapshot): SongType {
             return snapshot.getValue(SongType::class.java)!!
+
         }
     }).build()
+
+
 }

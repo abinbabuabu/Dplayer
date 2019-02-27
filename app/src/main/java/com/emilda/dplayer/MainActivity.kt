@@ -18,7 +18,7 @@ import com.emilda.dplayer.Intefaces.songClickListener
 import com.emilda.dplayer.Reciever.ConnectivityReceiverLive
 import com.emilda.dplayer.ViewModels.sharedViewModel
 import com.miguelcatalan.materialsearchview.MaterialSearchView
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main_contents.*
 import kotlinx.android.synthetic.main.mini_player_layout.*
 
 class MainActivity : BaseActivity() {
@@ -46,7 +46,7 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(mtoolbar)
         searchView = search_view as MaterialSearchView
 
-        recyclerView = findViewById(R.id.search_results)
+        recyclerView = search_results
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerSetup("sample")
 
