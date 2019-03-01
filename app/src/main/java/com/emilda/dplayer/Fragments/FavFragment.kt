@@ -31,6 +31,7 @@ class FavFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        shimmer_songs.startShimmerAnimation()
         fav_recycler.layoutManager = LinearLayoutManager(context)
         //viewModels
 
@@ -55,7 +56,7 @@ class FavFragment : Fragment() {
                }
 
             }
-        }, sharedVM)
+        }, shimmer_songs)
 
         fav_recycler.adapter = adapter
     }
@@ -70,5 +71,7 @@ class FavFragment : Fragment() {
         super.onDestroy()
         adapter.stopListening()
     }
+
+
 
 }

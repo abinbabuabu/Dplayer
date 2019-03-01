@@ -53,24 +53,23 @@ class SongsFragment : Fragment() {
         fragmentVM = ViewModelProviders.of(this,AllsongsFactory(sharedVM.userid)).get(AllSongsViewModel::class.java)
 
         myAdapter = SongsAdapter(fragmentVM.options,context!!,object:songClickListener{
-            override fun onSongClick(song: SongType, int: Int) {
-                if(int == R.id.song_layout)
+            override fun onSongClick(song: SongType, id: Int) {
+                if(id == R.id.song_layout)
                 sharedVM.loadMedia(song)
-                else if (int == R.id.add_to_now_playing)
+                else if (id == R.id.add_to_now_playing)
                     Toast.makeText(context,"Added to now playing",Toast.LENGTH_LONG).show()
                 else
                     sharedVM.removeFavSong(song)
 
             }
-        })
+        },shimmer_fav)
         recyclerView.adapter = myAdapter
-
-        player_controls.player = sharedVM.player
 
     }
 
     override fun onStart() {
         super.onStart()
+        shimmer_fav.startShimmerAnimation()
         myAdapter.startListening()
     }
 
@@ -78,6 +77,8 @@ class SongsFragment : Fragment() {
         super.onDestroy()
         myAdapter.stopListening()
     }
+
+
 
 }
 

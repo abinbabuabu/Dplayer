@@ -2,8 +2,9 @@
 <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
                                    xmlns:android="http://schemas.android.com/apk/res/android"
                                    android:stateListAnimator="@animator/lift_on_click"
+                                   android:focusable="true"
+                                   android:background="?attr/selectableItemBackground"
                                    android:layout_width="match_parent"
-                                   android:layout_marginBottom="1dp"
                                    android:layout_height="wrap_content">
     <androidx.constraintlayout.widget.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,12 +18,15 @@
                  android:layout_marginRight="8dp" android:layout_height="wrap_content">
 
         </include>
-        <androidx.appcompat.widget.AppCompatImageButton android:layout_width="48dp"
+        <androidx.appcompat.widget.AppCompatImageButton android:layout_width="40dp"
                                                         style="@style/Widget.AppCompat.ImageButton"
                                                         android:id="@+id/add_to_fav"
                                                         android:padding="4dp"
-                                                        app:srcCompat="@drawable/ic_fav"
-                                                        android:layout_height="48dp"
+                                                        android:clickable="true"
+                                                        android:foreground="?attr/actionBarItemBackground"
+                                                        android:background="#00000000"
+                                                        app:srcCompat="@drawable/ic_add"
+                                                        android:layout_height="40dp"
                                                         android:scaleType="fitCenter"
                                                         android:layout_centerHorizontal="true"
                                                         android:layout_marginTop="16dp"

@@ -25,7 +25,7 @@ class splash : BaseActivity() {
             if (user != null) {
                 var newuser:Boolean = user.metadata?.creationTimestamp == user.metadata?.lastSignInTimestamp
 
-                var intent = Intent(this, MainActivity::class.java).apply {
+                var intent = Intent(this,detailsActivity::class.java).apply {
                     putExtra("USER_ID", user.uid)
                     putExtra("NEW_USER",newuser)
                 }

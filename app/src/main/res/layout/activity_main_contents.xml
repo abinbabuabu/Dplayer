@@ -3,24 +3,6 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               android:layout_width="match_parent">
-    <FrameLayout
-            android:id="@+id/toolbar_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:background="@color/colorAccent"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:theme="@style/AppTheme.AppBarOverlay"/>
-
-        <com.miguelcatalan.materialsearchview.MaterialSearchView
-                android:id="@+id/search_view"
-                android:visibility="visible"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-    </FrameLayout>
 
 
     <com.google.android.material.tabs.TabLayout android:layout_width="match_parent"
@@ -41,10 +23,6 @@
                                                android:id="@+id/search_results">
 
     </androidx.recyclerview.widget.RecyclerView>
-    <include
-            android:layout_height="72dp"
-            layout="@layout/mini_player_layout" android:layout_width="match_parent">
 
-    </include>
 
 </LinearLayout>

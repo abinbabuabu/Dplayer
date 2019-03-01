@@ -12,6 +12,7 @@ class AllSongsViewModel(userId: String) :ViewModel(){
     val userId = userId
 
     private val AllArtistRef: Query = FirebaseDatabase.getInstance().reference.child("/users/$userId")
+    private val favDbLoc  = FirebaseDatabase.getInstance().reference.child("/users/$userId")
     //private val liveData: LiveData<DataSnapshot> = FirebaseQueryLiveData(AllArtistRef)
 
     val options = FirebaseRecyclerOptions.Builder<SongType>().setQuery(AllArtistRef,object: SnapshotParser<SongType> {
@@ -19,7 +20,6 @@ class AllSongsViewModel(userId: String) :ViewModel(){
             return snapshot.getValue(SongType::class.java)!!
         }
     }).build()
-
 
 
 }

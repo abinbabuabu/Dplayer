@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import com.emilda.dplayer.DataClass.SongType
-import com.emilda.dplayer.MainActivity
+import com.emilda.dplayer.detailsActivity
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 
@@ -19,7 +19,7 @@ class MediaAdapter(context: Context?,songType: SongType?) : PlayerNotificationMa
     }
 
     override fun createCurrentContentIntent(player: Player?): PendingIntent? {
-        var intent = Intent(context, MainActivity::class.java)
+        var intent = Intent(context, detailsActivity::class.java)
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
