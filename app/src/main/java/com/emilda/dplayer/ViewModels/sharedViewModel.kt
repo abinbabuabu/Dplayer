@@ -13,6 +13,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.firebase.ui.database.SnapshotParser
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -21,15 +22,15 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.google.firebase.database.*
 
 
-class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
-    var userid :String
+class sharedViewModel(UserId: String, newUser: Boolean) : ViewModel() {
+    var userid: String
     var currentSong: SongType? = null
-    var isPlaying :Boolean = false
-    var newUser:Boolean
+    var isPlaying: Boolean = false
+    var newUser: Boolean
     private val AllArtistRef: Query = FirebaseDatabase.getInstance().reference.child("/songs")
     private val users = FirebaseDatabase.getInstance().reference.child("/users")
-
-  //exoplayer
+lateinit var context: Context
+    //exoplayer
 
     var CHANNEL_ID = "DPlayer"
     var NOTIFICATION_ID = 12
@@ -38,8 +39,8 @@ class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
 
 
     init {
-         this.userid = UserId
-         this.newUser = newUser
+        this.userid = UserId
+        this.newUser = newUser
 
     }
 
@@ -49,51 +50,47 @@ class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
 
 //Exoplayer
 
-    fun initializePlayer(context:Context) {
+    fun initializePlayer(context: Context) {
         if (player == null) {
             player = ExoPlayerFactory.newSimpleInstance(context, DefaultTrackSelector())
-            playerNotManager = PlayerNotificationManager.createWithNotificationChannel(
-                context,
-                CHANNEL_ID,
-                R.string.CHANNEL_NAME,
-                NOTIFICATION_ID,
-                MediaAdapter(context,currentSong)
-            )
-
-         playerNotManager.setFastForwardIncrementMs(0)
-            playerNotManager.setRewindIncrementMs(0)
-            playerNotManager.setStopAction(null)
-
-            playerNotManager.setPlayer(player)
-            Log.d("user",userid)
+            this.context =context
+            //TODO("set the notification according to the song")
+            //TODO("Shuffling nad play all")
+            setNotification(currentSong)
 
         }
     }
-    fun loadMedia(songType: SongType?){
+
+    fun loadMedia(songType: SongType?) {
+
+        setNotification(songType)
         val mediaSource =
             buildMediaSource(Uri.parse(songType?.url))
         player?.prepare(mediaSource, true, false)
         Log.d("Working", "Media Loaded")
         player?.playWhenReady = true
+        playerNotManager.setPlayer(player)
+
         Log.d("Working", "When Ready is set")
     }
+
     private fun buildMediaSource(uri: Uri): MediaSource {
         val userAgent = "Dplayer"
         return ExtractorMediaSource.Factory(DefaultHttpDataSourceFactory(userAgent))
             .createMediaSource(uri)
     }
 
-     fun releasePlayer(context:Context) {
+    fun releasePlayer(context: Context) {
         playerNotManager.setPlayer(null)
 
-         playerNotManager.setPlayer(null)
-            player?.release()
-            player = null
+        playerNotManager.setPlayer(null)
+        player?.release()
+        player = null
     }
 
-    fun searchFiredb(queryString: String):FirebaseRecyclerOptions<SongType>{
-        val optBuild =AllArtistRef.orderByValue().startAt(queryString)//.endAt("$queryString\\uf8ff")
-        val options = FirebaseRecyclerOptions.Builder<SongType>().setQuery(optBuild,object:
+    fun searchFiredb(queryString: String): FirebaseRecyclerOptions<SongType> {
+        val optBuild = AllArtistRef.orderByValue().startAt(queryString)//.endAt("$queryString\\uf8ff")
+        val options = FirebaseRecyclerOptions.Builder<SongType>().setQuery(optBuild, object :
             SnapshotParser<SongType> {
             override fun parseSnapshot(snapshot: DataSnapshot): SongType {
                 return snapshot.getValue(SongType::class.java)!!
@@ -103,7 +100,7 @@ class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
     }
 
 
-    fun addToFavorites(songType: SongType){
+    fun addToFavorites(songType: SongType) {
         songType.isFav = true
         users.child(userid).child(songType.artistName).setValue(songType)
     }
@@ -113,28 +110,51 @@ class sharedViewModel(UserId: String, newUser: Boolean): ViewModel() {
     }
 
     fun checkFav(song: SongType): LiveData<Boolean> {
-         val FavRef= FirebaseDatabase.getInstance().reference.child("/users/$userid")
+        val FavRef = FirebaseDatabase.getInstance().reference.child("/users/$userid")
         val data: MutableLiveData<Boolean> = MutableLiveData()
         data.postValue(false)
 
-        FavRef.child(song.artistName).addListenerForSingleValueEvent(object: ValueEventListener {
+        FavRef.child(song.artistName).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                if(p0.exists()){
+                if (p0.exists()) {
                     data.postValue(true)
-                }
-                else{
-                    Log.d("FUCK","Not A fav")
+                } else {
+                    Log.d("FUCK", "Not A fav")
                 }
             }
         })
         return data
     }
 
+    private fun setNotification(song: SongType?){
+        playerNotManager = PlayerNotificationManager.createWithNotificationChannel(
+            context,
+            CHANNEL_ID,
+            R.string.CHANNEL_NAME,
+            NOTIFICATION_ID,
+            MediaAdapter(context,song)
+        )
+        playerNotManager.setFastForwardIncrementMs(0)
+        playerNotManager.setRewindIncrementMs(0)
+        playerNotManager.setStopAction(null)
 
+
+    }
+
+    fun playList(songs:List<SongType>){
+        var queue = ConcatenatingMediaSource()
+        for (i in songs){
+            val mediaSource =
+                buildMediaSource(Uri.parse(i.url))
+            queue.addMediaSource(mediaSource)
+        }
+        player?.prepare(queue)
+        player?.playWhenReady =true
+    }
 
 }
 

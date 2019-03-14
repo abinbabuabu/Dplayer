@@ -1,28 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:layout_width="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <View android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/colorAccent" app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"></View>
 
 
     <com.google.android.material.tabs.TabLayout android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
+                                                app:tabContentStart="0dp"
+                                                app:tabTextColor="#fff"
+                                                app:tabGravity="fill"
+                                                app:tabSelectedTextColor="#fffc"
+                                                app:tabIndicatorHeight="6dp"
+                                                app:tabIndicatorFullWidth="false"
+                                                app:tabIndicatorGravity="bottom"
+                                                app:tabIndicatorColor="#fff"
+                                                app:tabIndicator="@drawable/tab_indicator"
                                                 android:id="@+id/main_tab_layout"
-    >
-
+                                                app:tabBackground="@color/colorAccent"
+                                                app:layout_constraintStart_toStartOf="parent"
+                                                app:layout_constraintEnd_toEndOf="parent"
+                                                app:layout_constraintTop_toTopOf="parent">
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager android:layout_width="match_parent"
-                                         android:layout_height="match_parent"
+                                         android:layout_height="0dp"
                                          android:layout_weight="0.2"
-                                         android:id="@+id/view_pager"></androidx.viewpager.widget.ViewPager>
+                                         android:id="@+id/view_pager"
+                                         app:layout_constraintEnd_toEndOf="parent"
+                                         app:layout_constraintStart_toStartOf="parent"
+                                         app:layout_constraintHorizontal_bias="0.0"
+                                         app:layout_constraintBottom_toBottomOf="parent"
+                                         android:layout_marginTop="8dp"
+                                         app:layout_constraintTop_toBottomOf="@+id/main_tab_layout"></androidx.viewpager.widget.ViewPager>
 
-    <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
-                                               android:visibility="gone"
-                                               android:layout_height="match_parent"
-                                               android:id="@+id/search_results">
+    <!--<androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"-->
+    <!--android:visibility="gone"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:id="@+id/search_results">-->
 
-    </androidx.recyclerview.widget.RecyclerView>
+    <!--</androidx.recyclerview.widget.RecyclerView>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</LinearLayout>
+

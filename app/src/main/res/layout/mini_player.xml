@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 <ImageButton xmlns:app="http://schemas.android.com/apk/res-auto"
              xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
@@ -14,4 +14,5 @@
              android:background="#00000000"
              app:srcCompat="@drawable/ic_pause" android:layout_height="56dp"
              android:scaleType="fitCenter"/>
+
 </merge>

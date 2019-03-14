@@ -1,7 +1,6 @@
 package com.emilda.dplayer
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -71,12 +70,9 @@ class detailsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         main_tab_layout.setupWithViewPager(view_pager)
         internet()
         createSearch()
-       setBottomSheet()
+        setBottomSheet()
         player_exo.player = viewModel.player
         mini_player.player = viewModel.player
-
-
-
 
 
     }
@@ -85,14 +81,15 @@ class detailsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            //super.onBackPressed()
+            this.moveTaskToBack(true)
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.details, menu)
-        var menuItem  = menu.findItem(R.id.search)
+        var menuItem = menu.findItem(R.id.search)
         searchView.setMenuItem(menuItem)
         return true
     }
@@ -140,13 +137,12 @@ class detailsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             override fun onQueryTextSubmit(query: String?): Boolean {
                 //recyclerSetup(query!!)
                 // adapter.startListening()
-                Log.d("FUCK", query)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 //recyclerSetup(newText!!)
-                Log.d("FUCK", newText)
+
                 return true
             }
 
@@ -154,7 +150,7 @@ class detailsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         searchView.setOnSearchViewListener(object : MaterialSearchView.SearchViewListener {
             override fun onSearchViewClosed() {
-                search_results.visibility = View.GONE
+                //search_results.visibility = View.GONE
                 main_tab_layout.visibility = View.VISIBLE
                 view_pager.visibility = View.VISIBLE
             }
@@ -162,7 +158,7 @@ class detailsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             override fun onSearchViewShown() {
                 main_tab_layout.visibility = View.GONE
                 view_pager.visibility = View.GONE
-                search_results.visibility = View.VISIBLE
+                //search_results.visibility = View.VISIBLE
             }
 
         })
@@ -191,45 +187,48 @@ class detailsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     override fun onDestroy() {
-        if (viewModel != null)
-            viewModel.releasePlayer(this)
+        viewModel.releasePlayer(this)
         // adapter.stopListening()
         super.onDestroy()
     }
 
 
-    fun setBottomSheet(){
+    fun setBottomSheet() {
         val bottomSheetBehaviour = BottomSheetBehavior.from(bottom_sheet)
         bottomSheetBehaviour.isHideable = false
-        bottomSheetBehaviour.peekHeight = 208
+        bottomSheetBehaviour.peekHeight = 194
         bottomSheetBehaviour.state = BottomSheetBehavior.STATE_COLLAPSED
 //      val bottomSheet = PlayerFragment()
 //        bottomSheet.show(supportFragmentManager,"playerView")
-        mini_player_layout.setOnClickListener{
-          bottomSheetBehaviour.state = BottomSheetBehavior.STATE_EXPANDED
+        mini_player_layout.setOnClickListener {
+            bottomSheetBehaviour.state = BottomSheetBehavior.STATE_EXPANDED
         }
 
 
 
-        bottomSheetBehaviour.setBottomSheetCallback(object :BottomSheetBehavior.BottomSheetCallback(){
+        bottomSheetBehaviour.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(p0: View, p1: Float) {
-                Log.d("Alpha","${1-2*p1}")
-                mini_player_bottom.alpha = 1-2*p1
+                mini_player_bottom.alpha = 1 - 2 * p1
             }
 
             override fun onStateChanged(view: View, state: Int) {
-                when(state){
+                when (state) {
                     BottomSheetBehavior.STATE_EXPANDED -> mini_player_bottom.visibility = View.GONE
-                    BottomSheetBehavior.STATE_COLLAPSED -> {mini_player_bottom.visibility = View.VISIBLE
-                    mini_player_bottom.alpha = 1.0f
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        mini_player_bottom.visibility = View.VISIBLE
+                        mini_player_bottom.alpha = 1.0f
                     }
-                    BottomSheetBehavior.STATE_DRAGGING ->mini_player_bottom.visibility = View.VISIBLE
+                    BottomSheetBehavior.STATE_DRAGGING -> mini_player_bottom.visibility = View.VISIBLE
                 }
 
             }
         }
         )
 
+    }
+
+    fun tab(){
+      //  TabLayout.
     }
 
 

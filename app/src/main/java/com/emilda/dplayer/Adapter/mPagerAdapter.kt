@@ -6,13 +6,13 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.emilda.dplayer.Fragments.FavFragment
 import com.emilda.dplayer.Fragments.SongsFragment
 
-class mPagerAdapter(fm:FragmentManager) : FragmentPagerAdapter(fm) {
+class mPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-       return when(position){
+        return when (position) {
             0 -> SongsFragment()
-           else -> FavFragment()
-       }
+            else -> FavFragment()
+        }
     }
 
     override fun getCount(): Int {
@@ -20,8 +20,8 @@ class mPagerAdapter(fm:FragmentManager) : FragmentPagerAdapter(fm) {
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return when(position){
-            0->"Favorites"
+        return when (position) {
+            0 -> "Favorites"
             else -> "Songs"
         }
     }

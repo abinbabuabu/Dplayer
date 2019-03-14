@@ -62,8 +62,13 @@ class SongsFragment : Fragment() {
                     sharedVM.removeFavSong(song)
 
             }
-        },shimmer_fav)
+        },shimmer_fav,media_buttons)
         recyclerView.adapter = myAdapter
+
+
+        shuffle.setOnClickListener {
+
+        }
 
     }
 

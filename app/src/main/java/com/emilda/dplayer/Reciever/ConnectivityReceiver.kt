@@ -10,6 +10,9 @@ import android.net.NetworkRequest
 import android.os.Build
 import androidx.annotation.RequiresPermission
 import androidx.lifecycle.LiveData
+import java.io.IOException
+import java.net.InetSocketAddress
+import java.net.Socket
 
 @SuppressLint("NewApi")
 class ConnectivityReceiverLive internal constructor(private val connectivityManager: ConnectivityManager) :
@@ -20,7 +23,15 @@ class ConnectivityReceiverLive internal constructor(private val connectivityMana
 
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network?) {
-            postValue(true)
+            try {
+                val sock = Socket()
+                sock.connect(InetSocketAddress("8.8.8.8",53),1500)
+                sock.close()
+                postValue(true)
+            }catch (e:IOException){
+                postValue(false)
+            }
+
         }
 
         override fun onLost(network: Network?) {
@@ -28,6 +39,8 @@ class ConnectivityReceiverLive internal constructor(private val connectivityMana
         }
 
     }
+
+
 
 
     override fun onActive() {

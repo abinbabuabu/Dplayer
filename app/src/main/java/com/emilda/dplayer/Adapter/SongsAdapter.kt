@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -15,16 +16,20 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import kotlinx.android.synthetic.main.song_row.view.*
 
-class SongsAdapter(options: FirebaseRecyclerOptions<SongType>,
-                   context: Context,
-                   listener: songClickListener,
-                   shimmer: ShimmerFrameLayout) :
+class SongsAdapter(
+    options: FirebaseRecyclerOptions<SongType>,
+    context: Context,
+    listener: songClickListener,
+    shimmer: ShimmerFrameLayout,
+    media_buttons: LinearLayout
+) :
     FirebaseRecyclerAdapter<SongType, SongsAdapter.mViewHolder>(options) {
 
 
     private val context: Context = context
     private val mlistener: songClickListener = listener
     private val shimmer = shimmer
+    private  val mediaButton = media_buttons
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): mViewHolder {
@@ -34,6 +39,7 @@ class SongsAdapter(options: FirebaseRecyclerOptions<SongType>,
     override fun onBindViewHolder(holder: mViewHolder, position: Int, current: SongType) {
         shimmer.stopShimmerAnimation()
         shimmer.visibility = View.GONE
+        mediaButton.visibility = View.VISIBLE
         holder.artistName.text = current.artistName
         holder.songName.text = current.songName
         holder.customBind(mlistener, current)

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/main_coordinator"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -7,42 +8,53 @@
         android:layout_height="match_parent"
         tools:context=".detailsActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:theme="@style/AppTheme.AppBarOverlay">
-        <FrameLayout
-                android:id="@+id/toolbar_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    app:title="Dplayer"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimaryDark"
-                    app:popupTheme="@style/AppTheme.PopupOverlay"/>
-            <com.miguelcatalan.materialsearchview.MaterialSearchView
-                    android:id="@+id/search_view"
-                    android:visibility="visible"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-        </FrameLayout>
-
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_details"/>
 
+
     <androidx.core.widget.NestedScrollView
             android:id="@+id/bottom_sheet"
+            android:clipToPadding="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="@string/bottom_sheet_behavior">
         <include layout="@layout/player_view"></include>
-
     </androidx.core.widget.NestedScrollView>
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+        <com.google.android.material.appbar.CollapsingToolbarLayout android:layout_width="match_parent"
+                                                                    app:contentScrim="?attr/colorPrimary"
+                                                                    app:expandedTitleGravity="top"
+                                                                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                                                                    android:layout_height="match_parent">
+            <!--<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/shrine_toolbar_image_offset_top"-->
+            <!--app:layout_collapseMode="parallax"-->
+            <!--app:layout_collapseParallaxMultiplier="0.5"/>-->
+            <FrameLayout
+                    android:id="@+id/toolbar_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        app:title="Dplayer"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="?attr/colorPrimaryDark"
+                        app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                <com.miguelcatalan.materialsearchview.MaterialSearchView
+                        android:id="@+id/search_view"
+                        android:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+            </FrameLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

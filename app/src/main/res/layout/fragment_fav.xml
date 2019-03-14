@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:android="http://schemas.android.com/apk/res/android"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
-                                                   xmlns:android="http://schemas.android.com/apk/res/android">
+                                                   android:background="@drawable/rounded_layout">
 
     <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_songs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="visible">
         <LinearLayout
                 android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
 
@@ -22,7 +24,8 @@
     </com.facebook.shimmer.ShimmerFrameLayout>
     <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
                                                android:id="@+id/fav_recycler"
-                                               android:layout_height="match_parent"
+                                               android:layout_height="0dp"
+                                               android:layout_marginTop="8dp"
                                                app:layout_constraintStart_toStartOf="parent"
                                                app:layout_constraintTop_toTopOf="parent"
                                                app:layout_constraintEnd_toEndOf="parent"
