@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#000</color>
-    <color name="colorPrimaryDark">#5C1349</color>
-    <color name="colorAccent">#5C1349</color>
+    <color name="colorPrimaryDark">#00000000</color>
+    <color name="colorAccent">#FF6A00
+    </color>
+    <color name="bottomsheet">#eeeeee</color>
+
+
+    <!--App colour scheme-->
+    <color name="SimpleWhite">#FFFFFF</color>
+    <color name="Orange">#FF6A00</color>
+    <color name="Pink">#EE0979</color>
+    <color name="Whiteshade">#FFFCFC</color>
+    <color name="Black">#262626</color>
+    <color name="grey">#D9D9D9</color>
+    <color name="midColor">#FF6600</color>
+    <color name="LightOrange">#CBFDC399</color>
+    <color name="scrubberColor">#FF3427</color>
+
+    <color name="transparent">#00000000</color>
 </resources>

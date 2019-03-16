@@ -1,11 +1,14 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorAccent">@android:color/transparent</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">#000</item>
+        <item name="android:fitsSystemWindows">true</item>
+
     </style>
 
     <!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>-->
@@ -17,6 +20,58 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorBackgroundFloating">@drawable/gradient_main</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!--TextStyles-->
+
+    <style name="ArtistName">
+        <item name="android:fontFamily">@font/nunito_light_italic</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="SongName">
+        <item name="android:fontFamily">@font/nunito_semibold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="tabSelected">
+        <item name="android:fontFamily">@font/nunito_bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="AppTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/SimpleWhite</item>
+        <item name="android:fontFamily">@font/nunito_extrabold</item>
+    </style>
+
+    <!--Navigation Buttons-->
+
+    <style name="NavButtons" parent="Widget.MaterialComponents.Button.OutlinedButton.Icon">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/nunito_light</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="rippleColor">@color/Orange</item>
+    </style>
+    <style name="ProfileName">
+        <item name="android:fontFamily">@font/nunito_semibold</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/SimpleWhite</item>
+    </style>
+    <style name="EditProfile">
+        <item name="android:fontFamily">@font/nunito_extralight</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!--Exoplayer-->
+    <style name="timeText">
+        <item name="android:fontFamily">@font/nunito</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

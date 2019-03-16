@@ -1,13 +1,16 @@
 package com.emilda.dplayer
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -23,6 +26,7 @@ import kotlinx.android.synthetic.main.activity_main_contents.*
 import kotlinx.android.synthetic.main.app_bar_details.*
 import kotlinx.android.synthetic.main.mini_player_layout.*
 import kotlinx.android.synthetic.main.player_view.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class detailsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var searchView: MaterialSearchView
@@ -30,19 +34,28 @@ class detailsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     //private lateinit var recyclerView: RecyclerView
     private var userId: String = "sample"
     private var new_user = true
+    private lateinit var mini_player_layout: ConstraintLayout
     private lateinit var viewModel: sharedViewModel
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_details)
-        setSupportActionBar(toolbar)
-        searchView = search_view as MaterialSearchView
-        val actionBar: ActionBar? = supportActionBar
-        actionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.round_menu_24)
+
+        val w = window
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = getColor(R.color.transparent)
+            window.navigationBarColor = getColor(R.color.Black)
+            window.setBackgroundDrawableResource(R.drawable.gradient_main)
+
         }
 
+        setContentView(R.layout.activity_details)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = null
+
+        searchView = search_view as MaterialSearchView
 
         userId = intent.getStringExtra("USER_ID")
         new_user = intent.getBooleanExtra("NEW_USER", true)
@@ -55,6 +68,8 @@ class detailsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
+        toggle.isDrawerIndicatorEnabled = true
+
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -87,11 +102,13 @@ class detailsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.details, menu)
         var menuItem = menu.findItem(R.id.search)
         searchView.setMenuItem(menuItem)
         return true
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -193,42 +210,42 @@ class detailsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
 
-    fun setBottomSheet() {
+    private fun setBottomSheet() {
         val bottomSheetBehaviour = BottomSheetBehavior.from(bottom_sheet)
         bottomSheetBehaviour.isHideable = false
-        bottomSheetBehaviour.peekHeight = 194
+        //bottomSheetBehaviour.peekHeight = 194
+        bottomSheetBehaviour.setPeekHeight(194, true)
         bottomSheetBehaviour.state = BottomSheetBehavior.STATE_COLLAPSED
 //      val bottomSheet = PlayerFragment()
 //        bottomSheet.show(supportFragmentManager,"playerView")
-        mini_player_layout.setOnClickListener {
+        mini_player_bottom.setOnClickListener {
             bottomSheetBehaviour.state = BottomSheetBehavior.STATE_EXPANDED
         }
 
-
-
-        bottomSheetBehaviour.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onSlide(p0: View, p1: Float) {
-                mini_player_bottom.alpha = 1 - 2 * p1
-            }
-
-            override fun onStateChanged(view: View, state: Int) {
-                when (state) {
-                    BottomSheetBehavior.STATE_EXPANDED -> mini_player_bottom.visibility = View.GONE
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                        mini_player_bottom.visibility = View.VISIBLE
-                        mini_player_bottom.alpha = 1.0f
-                    }
-                    BottomSheetBehavior.STATE_DRAGGING -> mini_player_bottom.visibility = View.VISIBLE
+        bottomSheetBehaviour.setBottomSheetCallback(
+            object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onSlide(p0: View, p1: Float) {
+                    mini_player_bottom.alpha = 1 - 2 * p1
                 }
 
+                override fun onStateChanged(view: View, state: Int) {
+                    when (state) {
+                        BottomSheetBehavior.STATE_EXPANDED -> mini_player_bottom.visibility = View.GONE
+                        BottomSheetBehavior.STATE_COLLAPSED -> {
+                            mini_player_bottom.visibility = View.VISIBLE
+                            mini_player_bottom.alpha = 1.0f
+                        }
+                        BottomSheetBehavior.STATE_DRAGGING -> mini_player_bottom.visibility = View.VISIBLE
+                    }
+
+                }
             }
-        }
         )
 
     }
 
-    fun tab(){
-      //  TabLayout.
+    fun tab() {
+        //  TabLayout.
     }
 
 

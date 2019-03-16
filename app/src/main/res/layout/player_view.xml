@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   app:cardCornerRadius="16dp" android:layout_height="match_parent"
+                                   xmlns:android="http://schemas.android.com/apk/res/android">
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   android:background="#fff"
                                                    android:layout_width="match_parent"
+                                                   android:background="@color/SimpleWhite"
                                                    android:layout_height="match_parent">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="80dp"
-                  app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                  android:layout_marginBottom="36dp" app:layout_constraintBottom_toTopOf="@+id/cardView"
-                  app:layout_constraintTop_toTopOf="parent">
-        <include layout="@layout/mini_player_layout" android:id="@+id/mini_player_bottom"></include>
-    </LinearLayout>
+    <!--<LinearLayout android:layout_width="match_parent" android:layout_height="80dp"-->
+                  <!--app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"-->
+                  <!--android:layout_marginBottom="36dp" app:layout_constraintBottom_toTopOf="@+id/cardView"-->
+                  <!--app:layout_constraintTop_toTopOf="parent">-->
+        <!---->
+    <!--</LinearLayout>-->
+    <include layout="@layout/mini_player_layout" android:id="@+id/mini_player_bottom"
+             app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.cardview.widget.CardView android:layout_width="250dp"
                                        android:layout_height="250dp"
+                                       app:cardElevation="24dp"
                                        app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
                                        android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
                                        app:layout_constraintBottom_toBottomOf="parent"
@@ -50,3 +58,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

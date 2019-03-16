@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
-                                   xmlns:android="http://schemas.android.com/apk/res/android"
-                                   android:layout_width="match_parent"
-                                   android:layout_weight="0.7"
-                                   app:cardCornerRadius="8dp"
-                                   android:background="@color/colorPrimaryDark"
-                                   android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mini_player_layout"
+            android:id="@+id/mini_player_small"
+            android:background="@color/SimpleWhite"
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
@@ -42,8 +36,4 @@
                                                             app:layout_constraintVertical_bias="0.62"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-</androidx.cardview.widget.CardView>
 

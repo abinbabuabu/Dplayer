@@ -13,7 +13,6 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import kotlinx.android.synthetic.main.fav_row.view.*
-import kotlinx.android.synthetic.main.song_details.view.*
 
 class FavAdapter(
     options: FirebaseRecyclerOptions<SongType>,
@@ -37,7 +36,7 @@ class FavAdapter(
 
     private val context: Context = context
     private val mListener: songClickListener = listener
-    private val shimmer =shimmer
+    private val shimmer = shimmer
 
 
     inner class mViewHolder(v: View) : RecyclerView.ViewHolder(v) {

@@ -11,4 +11,33 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="shrine_toolbar_image_offset_top">48dp</dimen>
+
+
+    <!--Card Details-->
+    <dimen name="cardRadius">8dp</dimen>
+    <dimen name="cardElevation">8dp</dimen>
+
+    <!--Text details-->
+    <dimen name="songName">14dp</dimen>
+    <dimen name="albumname">12dp</dimen>
+
+    <!--song Row-->
+    <dimen name="leftRight">24dp</dimen>
+    <dimen name="bottomUp">10dp</dimen>
+    <dimen name="diffSongAlbum">4dp</dimen>
+
+    <!--Appbar-->
+    <dimen name="appBarTitle">14dp</dimen>
+
+     <!--songImage-->
+    <dimen name="songImageHeight">74dp</dimen>
+    <dimen name="songImageWidth">74dp</dimen>
+
+    <!--navigation Buttons-->
+    <dimen name="NavButWidth">102dp</dimen>
+    <dimen name="NavButHeight">40dp</dimen>
+    <dimen name="ButDiffNav">24dp</dimen>
+
+
+
 </resources>
